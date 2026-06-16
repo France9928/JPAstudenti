@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.annotations.NotFound;
 
 import accenture.com.entity.CartaIdentita;
+import accenture.com.entity.Corso;
 import accenture.com.entity.Esame;
 import accenture.com.entity.Studente;
 import accenture.com.exception.NotFoundException;
@@ -178,6 +179,56 @@ public class PostgresqlDao {
 
         return query.getResultList();
     }
+
+
+    //metodi corso
+
+    public void saveCorso(Corso corso){
+        em.getTransaction().begin();
+        em.persist(corso);
+        em.getTransaction().commit();
+    }
+
+    public void updateCorso(Corso corso) throws NotFoundException{
+
+        em.getTransaction().begin();
+        Corso corsoDaAggiornare = em.find(Corso.class, corso.getId());
+
+        if(corsoDaAggiornare!= null ){
+            corsoDaAggiornare.setNome(corso.getNome());
+            corsoDaAggiornare.setCfu(corso.getCfu());
+            corsoDaAggiornare.setDocente(corso.getDocente());
+
+            em.persist(corsoDaAggiornare);
+            em.getTransaction().commit();
+        }
+
+        else{
+            throw new NotFoundException("corso con id" + corso.getId() + "non trovato");
+        }
+           
+
+
+    }
+
+    public void removeCorso(Integer id){
+        em.getTransaction().begin();
+        Corso corsoDaRimuovere = em.find(Corso.class, id);
+        em.remove(corsoDaRimuovere);
+        em.getTransaction().commit();
+    }
+
+    public Corso getCorsoById(Integer id){
+        return em.find(Corso.class, id);
+
+    }
+
+    public List<Corso> getAllCorsi(){
+        Query query = em.createQuery("select c from Corso c", Corso.class);
+        return query.getResultList();
+    }
+
+
 
 
 

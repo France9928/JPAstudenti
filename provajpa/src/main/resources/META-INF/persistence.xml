@@ -6,6 +6,7 @@
         <class>accenture.com.entity.Studente</class>
         <class>accenture.com.entity.CartaIdentita</class>
         <class>accenture.com.entity.Esame</class>
+        <class>accenture.com.entity.Corso</class>
             <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver" />
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/jpaDemo" /> 

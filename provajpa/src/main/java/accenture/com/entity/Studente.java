@@ -6,6 +6,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.OneToMany;
@@ -31,6 +34,14 @@ public class Studente {
     @OneToMany(mappedBy = "studente")
     private List<Esame> esami;
 
+    //lato prorpietario(posso scegliere io)
+    @ManyToMany
+    @JoinTable(
+        name="studenti_corsi",
+        joinColumns = @JoinColumn(name = "studenti_id"), //foreign key che da questa terza tabela puntera su studenti
+        inverseJoinColumns = @JoinColumn(name = "corso_id")    
+    )
+    private List<Corso> corsi;
 
 
 
@@ -112,6 +123,14 @@ public class Studente {
 
     public void setEsami(List<Esame> esami) {
         this.esami = esami;
+    }
+
+    public List<Corso> getCorsi() {
+        return corsi;
+    }
+
+    public void setCorsi(List<Corso> corsi) {
+        this.corsi = corsi;
     }
     
 
